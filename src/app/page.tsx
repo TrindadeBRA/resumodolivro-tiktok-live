@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react';
 import io from 'socket.io-client';
+import { getGiftEmoji } from './utils'; // Importar a função de utilidade
 
 export default function Home() {
     const [messages, setMessages] = useState<any[]>([]); // Estado para armazenar as mensagens
@@ -12,17 +13,15 @@ export default function Home() {
 
         socket.on('chat', (data) => {
             setMessages((prevMessages) => [...prevMessages, data]); // Adicionar nova mensagem ao estado
-            messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' }); // Rolar para a última mensagem
         });
 
-        socket.on('like', (data) => {
-            setMessages((prevMessages) => [...prevMessages, { comment: `${data.uniqueId} deu like! 👍`, nickname: data.uniqueId }]); // Adicionar mensagem de like com emoji
-            messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' }); // Rolar para a última mensagem
-        });
+        // socket.on('like', (data) => {
+        //     setMessages((prevMessages) => [...prevMessages, { comment: `${data.uniqueId} deu like! 👍`, nickname: data.uniqueId }]); // Adicionar mensagem de like com emoji
+        // });
 
         socket.on('gift', (data) => {
-            setMessages((prevMessages) => [...prevMessages, { comment: `${data.uniqueId} enviou um presente: ${data.giftName}`, nickname: data.uniqueId }]); // Adicionar mensagem de presente
-            messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' }); // Rolar para a última mensagem
+            const emoji = getGiftEmoji(data.giftName); // Obter emoji correspondente ao presente
+            setMessages((prevMessages) => [...prevMessages, { comment: `${data.uniqueId} enviou um presente: ${emoji}`, nickname: data.uniqueId }]); // Adicionar mensagem de presente com emoji
         });
 
         // Desconectar ao desmontar o componente

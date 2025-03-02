@@ -20,18 +20,26 @@ app.prepare().then(() => {
     });
 
     // Substitua "nome_do_usuario" pelo nome de usuário real do TikTok
-    const tiktokUsername = "zbventress";
+    const tiktokUsername = "torvintv";
     const tiktokLiveConnection = new WebcastPushConnection(tiktokUsername);
 
     // Conectar à transmissão ao vivo
-    tiktokLiveConnection
-        .connect()
-        .then((state) => {
-            console.info(`Conectado à sala ${state.roomId}`);
-        })
-        .catch((err) => {
-            console.error('Falha ao conectar', err);
-        });
+    const connectToTikTok = () => {
+        tiktokLiveConnection
+            .connect()
+            .then((state) => {
+                console.info(`Conectado à sala ${state.roomId}`);
+            })
+            .catch((err) => {
+                console.error('Falha ao conectar', err);
+                // Tentar reconectar após um erro
+                console.log('Tentando reconectar em 5 segundos...');
+                setTimeout(connectToTikTok, 5000);
+            });
+    };
+
+    // Chamar a função de conexão
+    connectToTikTok();
 
     // Registrar eventos de chat no console
     tiktokLiveConnection.on('chat', (data) => {
