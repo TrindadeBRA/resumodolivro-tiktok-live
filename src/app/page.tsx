@@ -7,6 +7,7 @@ import Image from 'next/image';
 import LikeHeader from '@/components/LikeHeader';
 import ChatBox from '@/components/ChatBox';
 import LogoHeader from '@/components/LogoHeader';
+import ModalInfo from '@/components/ModalInfo';
 
 export default function Home() {
   const [messages, setMessages] = useState<any[]>([]);
@@ -61,12 +62,15 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-[url('/assets/images/background.png')] bg-cover bg-center">
+    <div className="flex flex-col min-h-screen p-4 bg-[url('/assets/images/background.png')] bg-cover bg-center relative">
+      <ModalInfo />
       <LogoHeader />
-      <LikeHeader likes={likes} lastLiker={lastLiker} />
+      <div className="flex flex-row justify-end w-full"> 
+        <LikeHeader likes={likes} lastLiker={lastLiker} />
+      </div>
       <div 
         ref={chatContainerRef}
-        className="w-full max-w-md bg-white rounded-lg shadow-lg h-[75vh] overflow-y-auto"
+        className="w-full max-w-md bg-white rounded-lg shadow-lg h-[70vh] overflow-y-auto mt-10"
       >
         <div className="flex flex-col bg-gray-100 rounded-lg shadow-inner p-4">
           <ChatBox messages={messages} />

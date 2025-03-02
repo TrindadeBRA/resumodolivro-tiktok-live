@@ -7,8 +7,8 @@ interface LikeHeaderProps {
 
 export default function LikeHeader({ likes, lastLiker }: LikeHeaderProps) {
   return (
-    <div className="text-md font-semibold my-4 line-clamp-1">
-      Likes: {likes} ❤️ - Último like: {lastLiker}
+    <div className="text-sm font-semibold my-4 line-clamp-1 w-1/2 text-center px-1">
+      <span className="text-white text-right">{likes} ❤️ - <span className="text-base">{lastLiker}</span></span>
     </div>
   );
 };
