@@ -8,11 +8,13 @@ import LikeHeader from '@/components/LikeHeader';
 import ChatBox from '@/components/ChatBox';
 import LogoHeader from '@/components/LogoHeader';
 import ModalInfo from '@/components/ModalInfo';
+import ModalGift from '@/components/ModalGift';
 
 export default function Home() {
   const [messages, setMessages] = useState<any[]>([]);
   const [likes, setLikes] = useState<number>(0);
   const [lastLiker, setLastLiker] = useState<string>('');
+  const [giftQueue, setGiftQueue] = useState<any[]>([]);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   
   // Função para rolar para o final do chat
@@ -54,12 +56,43 @@ export default function Home() {
           profilePictureUrl: null
         }
       ]);
+      
+      // Adiciona o presente à fila com um ID único
+      setGiftQueue(prevQueue => {
+        const newGift = {
+          ...data,
+          id: Date.now(), // Adiciona um ID único baseado no timestamp
+          timestamp: new Date().toISOString()
+        };
+        return [...prevQueue, newGift];
+      });
+
     });
 
     return () => {
       socket.disconnect();
     };
   }, []);
+
+  // Adicione este useEffect para remover o presente da fila após exibição
+  useEffect(() => {
+    if (giftQueue.length > 0) {
+      const timer = setTimeout(() => {
+        setGiftQueue(prevQueue => prevQueue.slice(1));
+      }, 5000); // Aumenta o tempo para 5 segundos
+      
+      return () => clearTimeout(timer);
+    }
+  }, [giftQueue]);
+
+  const currentGift = giftQueue[0];
+
+  useEffect(() => {
+    if (currentGift) {
+        // Se houver um presente atual, faça log dele
+        console.log('Presente atual:', currentGift);
+    }
+  }, [currentGift]); // Adiciona um efeito para monitorar mudanças no presente atual
 
   return (
     <div className="flex flex-col min-h-screen p-4 bg-[url('/assets/images/background.png')] bg-cover bg-center relative">
@@ -76,6 +109,7 @@ export default function Home() {
           <ChatBox messages={messages} />
         </div>
       </div>
+      <ModalGift gift={currentGift} />
     </div>
   );
 }

@@ -32,3 +32,7 @@ body {
 .animate-smooth-bounce {
     animation: smooth-bounce 1.3s ease-in-out infinite;
 }
+
+nextjs-portal {
+  display: none;
+}
