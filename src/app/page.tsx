@@ -57,12 +57,13 @@ export default function Home() {
         }
       ]);
       
-      // Adiciona o presente à fila com um ID único
+      // Adiciona o presente à fila com um ID único e o nome do presente
       setGiftQueue(prevQueue => {
         const newGift = {
           ...data,
           id: Date.now(), // Adiciona um ID único baseado no timestamp
-          timestamp: new Date().toISOString()
+          timestamp: new Date().toISOString(),
+          giftName: data.giftName // Adiciona o nome do presente
         };
         return [...prevQueue, newGift];
       });
