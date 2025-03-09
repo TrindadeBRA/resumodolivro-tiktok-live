@@ -19,7 +19,7 @@ export default function ModalGift({ gift }: { gift?: any }) {
         }
     }, [gift]);
 
-    if (!visible) return null; // Não renderiza o modal se não estiver visível
+    if (!visible || !gift) return null; // Não renderiza o modal se não estiver visível ou se gift for indefinido
 
     return (
         <div className="modal-gift absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
@@ -32,7 +32,7 @@ export default function ModalGift({ gift }: { gift?: any }) {
                                     {character.name}
                                 </span>
                                 <span className="text-white font-light">
-                                    do livro: {character.bookName}
+                                    Livro: {character.bookName}
                                 </span>
                             </h2>
                             <img src={character.imgUrl} alt={character.name} className="w-40 h-40 rounded-full border-2 border-white mt-2" />

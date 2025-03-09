@@ -52,8 +52,19 @@ app.prepare().then(() => {
         io.emit('like', data); // Emitir evento de like
     });
 
-    tiktokLiveConnection.on('gift', (data) => {
-        io.emit('gift', data); // Emitir evento de presente
+    tiktokLiveConnection.on('gift', data => {
+        // Log para entender o que está acontecendo
+        console.log(`Recebido presente: ${data.giftName}, de: ${data.uniqueId}, quantidade: ${data.repeatCount}`);
+    
+        // Verifica se o presente é do tipo 1 e se não é o final do streak
+        if (data.giftType === 1 && !data.repeatEnd) {
+            // Streak em andamento => mostrar apenas temporariamente
+            console.log(`${data.uniqueId} está enviando o presente ${data.giftName} x${data.repeatCount}`);
+        } else {
+            // Streak terminado ou presente não streakable => processar o presente com a contagem final
+            console.log(`${data.uniqueId} enviou o presente ${data.giftName} x${data.repeatCount}`);
+            io.emit('gift', data); // Emitir evento de presente
+        }
     });
 
     // Iniciar o servidor na porta 3000
