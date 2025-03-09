@@ -109,7 +109,7 @@ export default function Home() {
           <ChatBox messages={messages} />
         </div>
       </div>
-      <ModalGift gift={"XXX"} />
+      <ModalGift gift={currentGift} />
     </div>
   );
 }

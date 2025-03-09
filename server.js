@@ -20,7 +20,7 @@ app.prepare().then(() => {
     });
 
     // Substitua "nome_do_usuario" pelo nome de usuário real do TikTok
-    const tiktokUsername = "viraoplay";
+    const tiktokUsername = "torvintv";
     const tiktokLiveConnection = new WebcastPushConnection(tiktokUsername);
 
     // Conectar à transmissão ao vivo

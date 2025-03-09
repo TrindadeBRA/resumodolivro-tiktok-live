@@ -4,7 +4,7 @@ import { Character, drawCharacter } from '@/utils/characterLottery';
 import { useEffect, useState } from 'react';
 
 export default function ModalGift({ gift }: { gift?: any }) {
-    const [visible, setVisible] = useState(true);
+    const [visible, setVisible] = useState(false);
     const [character, setCharacter] = useState<Character | null>(null); // Estado para armazenar o personagem sorteado
 
     useEffect(() => {
@@ -14,7 +14,7 @@ export default function ModalGift({ gift }: { gift?: any }) {
             setCharacter(selectedCharacter); // Armazena o personagem sorteado
             const timer = setTimeout(() => {
                 setVisible(false);
-            }, 500000);
+            }, 7500);
             return () => clearTimeout(timer);
         }
     }, [gift]);
