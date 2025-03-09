@@ -33,6 +33,15 @@ body {
     animation: smooth-bounce 1.3s ease-in-out infinite;
 }
 
+@keyframes color-pulse {
+    0% { color: #ffcc00; } /* Cor inicial */
+    50% { color: #00ffcc; } /* Cor intermediária */
+    100% { color: #ff00cc; } /* Cor final */
+}
+
+.animate-color-pulse {
+    animation: color-pulse 3s infinite;
+}
 nextjs-portal {
   display: none;
 }
